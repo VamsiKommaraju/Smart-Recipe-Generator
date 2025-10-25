@@ -55,9 +55,15 @@ const IngredientInput = ({
     if (e.key === 'Enter' && searchTerm.trim()) {
       const ingredient = searchTerm.trim().toLowerCase();
       if (!selectedIngredients.includes(ingredient) && ingredient.length > 0) {
-        onIngredientAdd(ingredient);
-        setSearchTerm('');
-        setShowSuggestions(false);
+        // Validate ingredient (basic validation)
+        if (ingredient.length >= 2 && /^[a-zA-Z\s-]+$/.test(ingredient)) {
+          onIngredientAdd(ingredient);
+          setSearchTerm('');
+          setShowSuggestions(false);
+        } else {
+          // Show error for invalid input
+          alert('Please enter a valid ingredient name (letters and spaces only, at least 2 characters)');
+        }
       }
     }
   };

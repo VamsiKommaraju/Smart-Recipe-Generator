@@ -21,6 +21,7 @@ function App() {
   const [favorites, setFavorites] = useState([]);
   const [ratings, setRatings] = useState({});
   const [loading, setLoading] = useState(false);
+  const [servingSize, setServingSize] = useState(4);
 
   // Load favorites and ratings from localStorage
   useEffect(() => {
@@ -43,31 +44,51 @@ function App() {
     localStorage.setItem('recipeRatings', JSON.stringify(ratings));
   }, [ratings]);
 
-  // Recipe matching algorithm
+  // Enhanced recipe matching algorithm with better uncommon ingredient support
   const findMatchingRecipes = useCallback((ingredients, recipeList) => {
     if (ingredients.length === 0) return recipeList;
 
     return recipeList.map(recipe => {
       const matchingIngredients = recipe.ingredients.filter(ingredient =>
-        ingredients.some(selectedIngredient =>
-          ingredient.toLowerCase().includes(selectedIngredient.toLowerCase()) ||
-          selectedIngredient.toLowerCase().includes(ingredient.toLowerCase())
-        )
+        ingredients.some(selectedIngredient => {
+          const ingredientLower = ingredient.toLowerCase();
+          const selectedLower = selectedIngredient.toLowerCase();
+          
+          // Exact match
+          if (ingredientLower === selectedLower) return true;
+          
+          // Contains match (both directions)
+          if (ingredientLower.includes(selectedLower) || selectedLower.includes(ingredientLower)) return true;
+          
+          // Word boundary match for compound ingredients
+          const ingredientWords = ingredientLower.split(/[\s,-]+/);
+          const selectedWords = selectedLower.split(/[\s,-]+/);
+          
+          return ingredientWords.some(word => 
+            selectedWords.some(selectedWord => 
+              word.includes(selectedWord) || selectedWord.includes(word)
+            )
+          );
+        })
       );
 
       const matchScore = (matchingIngredients.length / recipe.ingredients.length) * 100;
       const hasAllIngredients = matchingIngredients.length === recipe.ingredients.length;
+      const partialMatch = matchingIngredients.length > 0;
 
       return {
         ...recipe,
         matchScore,
         hasAllIngredients,
+        partialMatch,
         matchingIngredients
       };
     }).sort((a, b) => {
-      // Prioritize recipes with all ingredients, then by match score
+      // Prioritize recipes with all ingredients, then partial matches, then by match score
       if (a.hasAllIngredients && !b.hasAllIngredients) return -1;
       if (!a.hasAllIngredients && b.hasAllIngredients) return 1;
+      if (a.partialMatch && !b.partialMatch) return -1;
+      if (!a.partialMatch && b.partialMatch) return 1;
       return b.matchScore - a.matchScore;
     });
   }, []);
@@ -171,6 +192,27 @@ function App() {
     ).map(([key, values]) => ({ ingredient: key, alternatives: values }));
   };
 
+  const adjustServingSize = (recipe, newServingSize) => {
+    const ratio = newServingSize / recipe.servings;
+    return {
+      ...recipe,
+      servings: newServingSize,
+      nutritionalInfo: {
+        calories: Math.round(recipe.nutritionalInfo.calories * ratio),
+        protein: Math.round(recipe.nutritionalInfo.protein * ratio * 10) / 10,
+        carbs: Math.round(recipe.nutritionalInfo.carbs * ratio * 10) / 10,
+        fat: Math.round(recipe.nutritionalInfo.fat * ratio * 10) / 10
+      }
+    };
+  };
+
+  const handleServingSizeChange = (newSize) => {
+    setServingSize(newSize);
+    if (selectedRecipe) {
+      setSelectedRecipe(adjustServingSize(selectedRecipe, newSize));
+    }
+  };
+
   return (
     <div className="App">
       <Header />
@@ -221,6 +263,8 @@ function App() {
           onToggleFavorite={handleToggleFavorite}
           onRating={handleRating}
           substitutionSuggestions={getSubstitutionSuggestions(selectedRecipe)}
+          servingSize={servingSize}
+          onServingSizeChange={handleServingSizeChange}
         />
       )}
     </div>

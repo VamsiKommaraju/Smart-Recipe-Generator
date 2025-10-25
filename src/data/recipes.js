@@ -8,12 +8,15 @@ export const recipes = [
     servings: 4,
     ingredients: ["pasta", "eggs", "parmesan", "bacon", "garlic", "black pepper"],
     instructions: [
-      "Cook pasta according to package directions",
-      "Fry bacon until crispy, set aside",
-      "Beat eggs with parmesan and black pepper",
-      "Drain pasta, reserve some pasta water",
-      "Mix hot pasta with bacon, then with egg mixture",
-      "Add pasta water if needed for creaminess"
+      "Bring a large pot of salted water to boil and cook 400g spaghetti according to package directions (about 8-10 minutes)",
+      "While pasta cooks, cut 200g bacon into small pieces and fry in a large pan over medium heat until crispy (5-7 minutes)",
+      "Remove bacon from pan and set aside, leaving the fat in the pan",
+      "In a bowl, whisk together 4 large eggs, 100g grated parmesan cheese, and freshly ground black pepper",
+      "When pasta is al dente, reserve 1 cup of pasta water, then drain the pasta",
+      "Return pasta to the pot, add the crispy bacon, and toss to combine",
+      "Remove from heat and quickly stir in the egg mixture, tossing constantly to create a creamy sauce",
+      "Add reserved pasta water gradually if the sauce is too thick",
+      "Serve immediately with extra parmesan and black pepper"
     ],
     nutritionalInfo: {
       calories: 520,
@@ -505,7 +508,21 @@ export const commonIngredients = [
   "chicken", "beef", "pork", "fish", "salmon", "shrimp", "eggs", "milk", "cheese", "yogurt",
   "onion", "garlic", "tomatoes", "potatoes", "carrots", "bell peppers", "broccoli", "spinach",
   "rice", "pasta", "bread", "quinoa", "oats", "flour", "sugar", "salt", "pepper", "olive oil",
-  "butter", "lemon", "lime", "herbs", "spices", "ginger", "cilantro", "basil", "oregano"
+  "butter", "lemon", "lime", "herbs", "spices", "ginger", "cilantro", "basil", "oregano",
+  "tofu", "tempeh", "mushrooms", "avocado", "sweet potato", "chickpeas", "lentils", "beans",
+  "coconut milk", "almond milk", "cashew cream", "tahini", "sesame oil", "soy sauce", "vinegar",
+  "honey", "maple syrup", "coconut oil", "ghee", "parmesan", "mozzarella", "feta", "ricotta",
+  "bacon", "ham", "sausage", "turkey", "lamb", "duck", "seafood", "crab", "lobster", "scallops",
+  "artichoke", "asparagus", "brussels sprouts", "cauliflower", "eggplant", "zucchini", "squash",
+  "kale", "arugula", "lettuce", "cucumber", "radish", "beet", "turnip", "parsnip", "celery",
+  "apples", "bananas", "oranges", "berries", "grapes", "peaches", "pears", "plums", "cherries",
+  "nuts", "almonds", "walnuts", "pecans", "cashews", "pistachios", "hazelnuts", "pine nuts",
+  "seeds", "chia seeds", "flax seeds", "sunflower seeds", "pumpkin seeds", "sesame seeds",
+  "grains", "barley", "bulgur", "couscous", "farro", "millet", "buckwheat", "wild rice",
+  "spices", "cumin", "coriander", "cardamom", "cinnamon", "nutmeg", "cloves", "allspice",
+  "paprika", "cayenne", "turmeric", "saffron", "vanilla", "cocoa", "chocolate", "coffee",
+  "tea", "wine", "beer", "vinegar", "balsamic", "apple cider", "rice vinegar", "white wine",
+  "red wine", "sherry", "brandy", "rum", "whiskey", "vodka", "gin", "tequila", "liqueurs"
 ];
 
 export const dietaryOptions = [

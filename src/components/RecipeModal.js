@@ -8,7 +8,9 @@ const RecipeModal = ({
   rating, 
   onToggleFavorite, 
   onRating,
-  substitutionSuggestions 
+  substitutionSuggestions,
+  servingSize,
+  onServingSizeChange
 }) => {
   const renderStars = (currentRating) => {
     return (
@@ -130,6 +132,42 @@ const RecipeModal = ({
                 </div>
               </div>
             )}
+
+            {/* Serving Size Adjustment */}
+            <div className="recipe-section">
+              <h3 className="section-title">Adjust Serving Size</h3>
+              <div style={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                gap: '1rem',
+                padding: '1rem',
+                background: 'white',
+                borderRadius: '8px',
+                border: '1px solid #e1e8ed'
+              }}>
+                <label style={{ fontSize: '1rem', fontWeight: '600', color: '#2d3748' }}>
+                  Servings:
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  max="20"
+                  value={servingSize}
+                  onChange={(e) => onServingSizeChange(parseInt(e.target.value) || 1)}
+                  style={{
+                    width: '80px',
+                    padding: '0.5rem',
+                    border: '2px solid #e1e8ed',
+                    borderRadius: '8px',
+                    fontSize: '1rem',
+                    textAlign: 'center'
+                  }}
+                />
+                <div style={{ fontSize: '0.9rem', color: '#666' }}>
+                  Nutritional values will be recalculated automatically
+                </div>
+              </div>
+            </div>
 
             {/* Actions */}
             <div className="recipe-section">
