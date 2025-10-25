@@ -39,7 +39,7 @@ A modern, intelligent recipe suggestion application that helps users find perfec
 ### Local Development
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone <https://github.com/VamsiKommaraju/Smart-Recipe-Generator.git>
 cd smart-recipe-generator
 
 # Install dependencies
